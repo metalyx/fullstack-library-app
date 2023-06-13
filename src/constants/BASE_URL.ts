@@ -1,1 +1,4 @@
-export const BASE_URL = 'https://express-librarian.herokuapp.com/';
+export const BASE_URL =
+    process.env.NODE_ENV === 'development'
+        ? 'http://localhost:5000/'
+        : 'https://express-librarian.herokuapp.com/';

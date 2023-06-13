@@ -5,23 +5,19 @@
     "type": "module",
     "scripts": {
         "tsc": "./node_modules/typescript/bin/tsc",
-        "dev": "vite",
+        "dev:frontend": "vite",
         "build": "npm run tsc && vite build",
         "build:local": "tsc && vite build",
         "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
         "start": "node server.js",
-        "dev:express": "nodemon server.js"
+        "dev:backend": "nodemon server.js",
+        "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
     },
     "dependencies": {
         "@reduxjs/toolkit": "^1.9.5",
         "@types/react-redux": "^7.1.25",
         "axios": "^1.4.0",
-        "react": "^18.2.0",
-        "react-dom": "^18.2.0",
-        "react-redux": "^8.0.5",
-        "react-router-dom": "^6.11.2",
-        "serve": "^14.2.0",
         "bcryptjs": "^2.4.3",
         "cors": "^2.8.5",
         "dotenv": "^16.1.0",
@@ -29,7 +25,11 @@
         "express-validator": "^7.0.1",
         "jsonwebtoken": "^9.0.0",
         "mongoose": "^7.2.1",
-        "nodemon": "^2.0.22"
+        "react": "^18.2.0",
+        "react-dom": "^18.2.0",
+        "react-redux": "^8.0.5",
+        "react-router-dom": "^6.11.2",
+        "serve": "^14.2.0"
     },
     "devDependencies": {
         "@types/react": "^18.0.28",
@@ -38,9 +38,11 @@
         "@typescript-eslint/parser": "^5.57.1",
         "@vitejs/plugin-react": "^4.0.0",
         "autoprefixer": "^10.4.14",
+        "concurrently": "^8.2.0",
         "eslint": "^8.38.0",
         "eslint-plugin-react-hooks": "^4.6.0",
         "eslint-plugin-react-refresh": "^0.3.4",
+        "nodemon": "^2.0.22",
         "postcss": "^8.4.23",
         "tailwindcss": "^3.3.2",
         "typescript": "^5.0.2",
