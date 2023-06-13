@@ -62,7 +62,7 @@ class authController {
 
             const { username, password } = req.body;
 
-            const user = await findOne({ username });
+            const user = await User.findOne({ username });
 
             if (!user) {
                 return res.status(400).json({
