@@ -4,6 +4,7 @@ import { getUsersInfo } from '../../helpers/getUsersInfo';
 import AllUsers from './AllUsers';
 import { iUser } from '../../models/iUser';
 import { useNavigate } from 'react-router-dom';
+import Page from '../Page';
 
 const Admin = () => {
     const navigate = useNavigate();
@@ -33,8 +34,7 @@ const Admin = () => {
     }, [users]);
 
     return (
-        <div>
-            <h1 className='my-3'>Admin menu</h1>
+        <Page title='Admin menu'>
             {!userInfo && <div>Checking permissions...</div>}
             <div>
                 <div className='flex gap-4'>
@@ -47,7 +47,7 @@ const Admin = () => {
                 </div>
                 <div>{adminView}</div>
             </div>
-        </div>
+        </Page>
     );
 };
 
