@@ -26,7 +26,7 @@ const App = () => {
     const { logIn, setUser } = userSlice.actions;
 
     useEffect(() => {
-        (async () => {
+        const fetchUserInfo = async () => {
             const userId = await getUserIdFromToken();
 
             if (userId === null) {
@@ -46,7 +46,9 @@ const App = () => {
             if (location.pathname === '/login') {
                 return navigate('/');
             }
-        })();
+        };
+
+        fetchUserInfo();
     }, []);
 
     return (

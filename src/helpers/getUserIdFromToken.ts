@@ -9,9 +9,9 @@ export async function getUserIdFromToken(): Promise<string | null> {
 
     if (!token) {
         return null;
-    } else {
-        setToken(token);
     }
+
+    setToken(token);
 
     try {
         const response = await Axios.get('/api/auth/checkToken');
