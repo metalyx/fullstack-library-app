@@ -1,10 +1,12 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
 import userReducer from './reducers/UserSlice';
 import bookReducer from './reducers/BookSlice';
+import bookingReducer from './reducers/BookingSlice';
 
 const rootReducer = combineReducers({
     userReducer,
     bookReducer,
+    bookingReducer,
 });
 
 export const setupStore = () => {

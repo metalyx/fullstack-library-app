@@ -18,21 +18,21 @@ const Books = () => {
     const [booksToShow, setBooksToShow] = useState<iBook[]>([]);
 
     useEffect(() => {
-        (async () => {
-            if (books.length === 0) {
-                dispatch(setIsLoading(true));
+        const fetchBooks = async () => {
+            dispatch(setIsLoading(true));
 
-                const allBooks = await getAllBooks();
+            const allBooks = await getAllBooks();
 
-                if (allBooks) {
-                    dispatch(setBooks(allBooks));
-                    dispatch(setIsLoading(false));
-                } else {
-                    dispatch(setError('Error with fetching books'));
-                    dispatch(setIsLoading(false));
-                }
+            if (allBooks) {
+                dispatch(setBooks(allBooks));
+                dispatch(setIsLoading(false));
+            } else {
+                dispatch(setError('Error with fetching books'));
+                dispatch(setIsLoading(false));
             }
-        })();
+        };
+
+        fetchBooks();
     }, []);
 
     useEffect(() => {
@@ -44,7 +44,7 @@ const Books = () => {
             setBooksToShow(books);
             return;
         }
-        console.log(search);
+
         const filtered = books.filter((book) =>
             book.title.toLowerCase().includes(search.toLowerCase())
         );

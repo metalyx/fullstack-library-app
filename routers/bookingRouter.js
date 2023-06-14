@@ -13,10 +13,15 @@ router.get(
     roleMiddleware(['ADMIN', 'LIBRARIAN']),
     bookingController.getAllBookings
 );
-router.post(
-    '/cancell',
+router.get(
+    '/:userId',
     roleMiddleware(['ADMIN', 'LIBRARIAN']),
-    bookingController.cancellBooking
+    bookingController.getBookingByUserId
+);
+router.post(
+    '/cancel',
+    roleMiddleware(['ADMIN', 'LIBRARIAN']),
+    bookingController.cancelBooking
 );
 
 export default router;

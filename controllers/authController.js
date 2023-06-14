@@ -45,7 +45,6 @@ class authController {
             await user.save();
             res.status(201).json({ message: 'User successfully created.' });
         } catch (e) {
-            console.log(e);
             res.status(400).json({ message: 'Registration error' });
         }
     }
@@ -80,7 +79,6 @@ class authController {
 
             return res.json({ token });
         } catch (e) {
-            console.log(e);
             res.status(400).json({ message: 'Login error' });
         }
     }
@@ -89,7 +87,6 @@ class authController {
             const users = await User.find();
             res.status(200).json(users);
         } catch (e) {
-            console.log(e);
             res.status(400).json({ message: 'getUsers error' });
         }
     }
@@ -128,7 +125,6 @@ class authController {
 
             res.status(200).json(userInfo);
         } catch (e) {
-            console.log(e);
             return res.status(500).json({ message: 'Error occured', ...e });
         }
     }

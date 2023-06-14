@@ -26,7 +26,10 @@ export const bookingSlice = createSlice({
         setError: (state, action: PayloadAction<BookingState['error']>) => {
             state.error = action.payload;
         },
-        setBooks: (state, action: PayloadAction<BookingState['bookings']>) => {
+        setBookings: (
+            state,
+            action: PayloadAction<BookingState['bookings']>
+        ) => {
             state.bookings = action.payload;
         },
     },

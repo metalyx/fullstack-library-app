@@ -13,6 +13,9 @@ import { getUserIdFromToken } from './helpers/getUserIdFromToken';
 import { getUserInfo } from './helpers/getUserInfo';
 import { setToken } from './utils/Axios';
 import Bookings from './components/bookings/Bookings';
+import CreateBooking from './components/bookings/CreateBooking';
+import { ErrorBoundary } from 'react-error-boundary';
+import CancelBooking from './components/bookings/CancelBooking';
 
 const App = () => {
     const [isLoading, setIsLoading] = useState(true);
@@ -51,40 +54,57 @@ const App = () => {
             {isLoading && <div>Loading...</div>}
             {!isLoading && (
                 <Layout>
-                    <Routes>
-                        <Route
-                            path='/login'
-                            element={<Login />}
-                        />
-                        <Route
-                            path='/registrationSuccess'
-                            element={<Login successReg />}
-                        />
-                        <Route
-                            path='/registration'
-                            element={<Login registration />}
-                        />
-                        <Route
-                            path='/'
-                            element={<Home />}
-                        />
-                        <Route
-                            path='/books'
-                            element={<Books />}
-                        />
-                        <Route
-                            path='/profile'
-                            element={<Profile />}
-                        />
-                        <Route
-                            path='/admin'
-                            element={<Admin />}
-                        />
-                        <Route
-                            path='/bookings'
-                            element={<Bookings />}
-                        />
-                    </Routes>
+                    <ErrorBoundary
+                        fallback={
+                            <p className='text-xl text-red-600'>
+                                Sorry, the App crashed. Check the console for
+                                more details.
+                            </p>
+                        }
+                    >
+                        <Routes>
+                            <Route
+                                path='/login'
+                                element={<Login />}
+                            />
+                            <Route
+                                path='/registrationSuccess'
+                                element={<Login successReg />}
+                            />
+                            <Route
+                                path='/registration'
+                                element={<Login registration />}
+                            />
+                            <Route
+                                path='/'
+                                element={<Home />}
+                            />
+                            <Route
+                                path='/books'
+                                element={<Books />}
+                            />
+                            <Route
+                                path='/profile'
+                                element={<Profile />}
+                            />
+                            <Route
+                                path='/admin'
+                                element={<Admin />}
+                            />
+                            <Route
+                                path='/bookings'
+                                element={<Bookings />}
+                            />
+                            <Route
+                                path='/createBooking'
+                                element={<CreateBooking />}
+                            />
+                            <Route
+                                path='/cancelBooking'
+                                element={<CancelBooking />}
+                            />
+                        </Routes>
+                    </ErrorBoundary>
                 </Layout>
             )}
         </>

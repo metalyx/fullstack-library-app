@@ -30,7 +30,6 @@ export default function (roles) {
 
             next();
         } catch (e) {
-            console.log(e);
             return res.status(403).json({ message: 'Unauthorized 123' });
         }
     };

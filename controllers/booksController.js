@@ -6,8 +6,23 @@ class booksController {
             const books = await Book.find();
             res.status(200).json(books);
         } catch (e) {
-            console.log(e);
-            res.status(400).json({ message: 'Error during fetch books', ...e });
+            res.status(400).json({
+                message: 'Error during fetching books',
+                ...e,
+            });
+        }
+    }
+
+    async getAvailableBooks(req, res) {
+        try {
+            const availableBooks = await Book.find({ isAvailable: true });
+
+            res.status(200).json(availableBooks);
+        } catch (e) {
+            res.status(400).json({
+                message: 'Error during fetching books',
+                ...e,
+            });
         }
     }
 

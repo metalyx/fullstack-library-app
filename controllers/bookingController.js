@@ -57,7 +57,7 @@ class bookingController {
         }
     }
 
-    async cancellBooking(req, res) {
+    async cancelBooking(req, res) {
         const { _id } = req.body;
 
         if (!_id) {
@@ -84,9 +84,70 @@ class bookingController {
         try {
             const bookings = await Booking.find();
 
-            res.status(200).json(bookings);
+            const deepBookings = await Promise.all(
+                bookings.map(async (booking) => {
+                    try {
+                        const booker = await User.findById(
+                            booking.booker
+                        ).select('username roles');
+                        const book = await Book.findById(booking.book);
+
+                        const newBooking = {
+                            _id: booking._id,
+                            date: booking.date,
+                            isActive: booking.isActive,
+                            booker,
+                            book,
+                        };
+
+                        return newBooking;
+                    } catch (e) {
+                        throw new Error(e);
+                    }
+                })
+            );
+
+            res.status(200).json(deepBookings);
         } catch (e) {
             unexpectedError(res, e);
+        }
+    }
+
+    async getBookingByUserId(req, res) {
+        try {
+            const { userId } = req.params;
+
+            if (!userId) {
+                return res
+                    .status(400)
+                    .json({ message: 'userId was not provided' });
+            }
+
+            const { bookings } = await User.findById(userId).select('bookings');
+
+            const promises = bookings.map(async (bookingId) => {
+                const booking = await Booking.findById(bookingId);
+                return booking;
+            });
+
+            const depthBookings = await Promise.all(promises);
+
+            const booksPromises = depthBookings.map(async (booking) => {
+                const book = await Book.findById(booking.book);
+
+                return {
+                    ...booking._doc,
+                    book,
+                };
+            });
+
+            const depthBookingsWithBooks = await Promise.all(booksPromises);
+
+            res.status(200).json(depthBookingsWithBooks);
+        } catch (e) {
+            res.status(500).json({
+                message: 'Error while trying to get bookings from DB',
+            });
         }
     }
 }

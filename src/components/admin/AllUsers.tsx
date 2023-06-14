@@ -24,13 +24,19 @@ const AllUsers: React.FC<iAllUsers> = ({ users }) => {
                             Roles: <span>{user.roles}</span>
                         </div>
                         <div>
-                            Booked:{' '}
+                            Booked:
                             {user.bookings.map((booking) => (
                                 <div>
                                     <b>Date of booking: </b>
-                                    <span>{booking.date}</span>
-                                    <b>Book title: </b>
-                                    <span>{booking.book.title}</span>
+                                    <span>
+                                        {new Date(
+                                            parseInt(booking.date)
+                                        ).toLocaleString()}
+                                    </span>
+                                    <b>Book Id: </b>
+                                    <span>
+                                        {booking.book as unknown as string}
+                                    </span>
                                     <b>Booking status: </b>
                                     <span>
                                         {booking.isActive
