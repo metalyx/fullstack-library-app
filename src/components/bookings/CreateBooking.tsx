@@ -3,8 +3,15 @@ import Page from '../Page';
 import { Axios } from '../../utils/Axios';
 import { iUser } from '../../models/iUser';
 import { iBook } from '../../models/iBook';
-import Button from '../Buttons/Button';
+import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import {
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    SelectChangeEvent,
+} from '@mui/material';
 
 const CreateBooking = () => {
     const [availableBooks, setAvailableBooks] = useState<iBook[]>([]);
@@ -53,14 +60,14 @@ const CreateBooking = () => {
             });
     }, []);
 
-    const handleBookerSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleBookerSelect = (e: SelectChangeEvent<string>) => {
         setBookingForm({
             ...bookingForm,
             userId: e.target.value,
         });
     };
 
-    const handleBookSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const handleBookSelect = (e: SelectChangeEvent<string>) => {
         setBookingForm({
             ...bookingForm,
             bookId: e.target.value,
@@ -107,47 +114,58 @@ const CreateBooking = () => {
                     )}
                     {!isLoading && (
                         <form onSubmit={(e) => e.preventDefault()}>
-                            <div>
-                                <label htmlFor='bookerSelect'>Booker:</label>
-                                <select
-                                    id='bookerSelect'
+                            <FormControl fullWidth>
+                                <InputLabel id='booker-select-label'>
+                                    Booker
+                                </InputLabel>
+                                <Select
+                                    labelId='booker-select-label'
+                                    id='booker-select'
+                                    value={bookingForm.userId}
+                                    label='Booker'
                                     onChange={handleBookerSelect}
-                                    className='ml-2'
-                                    defaultValue=''
                                 >
-                                    <option></option>
+                                    <MenuItem value=''>-</MenuItem>
                                     {users &&
                                         users.map((user) => (
-                                            <option
-                                                key={user._id}
+                                            <MenuItem
                                                 value={user._id}
+                                                key={user._id}
                                             >
-                                                ({user._id})-{user.username}
-                                            </option>
+                                                {user.username} - ({user._id})
+                                            </MenuItem>
                                         ))}
-                                </select>
-                            </div>
+                                </Select>
+                            </FormControl>
                             <div className='my-4'>
-                                <label htmlFor='bookSelect'>Book:</label>
-                                <select
-                                    id='bookSelect'
-                                    onChange={handleBookSelect}
-                                    className='ml-2'
-                                    defaultValue=''
-                                >
-                                    <option></option>
-                                    {availableBooks &&
-                                        availableBooks.map((book) => (
-                                            <option
-                                                key={book._id}
-                                                value={book._id}
-                                            >
-                                                ({book._id})-{book.title}
-                                            </option>
-                                        ))}
-                                </select>
+                                <FormControl fullWidth>
+                                    <InputLabel id='book-select-label'>
+                                        Book title
+                                    </InputLabel>
+                                    <Select
+                                        labelId='book-select-label'
+                                        id='book-select'
+                                        value={bookingForm.bookId}
+                                        label='Book title'
+                                        onChange={handleBookSelect}
+                                    >
+                                        <MenuItem value=''>-</MenuItem>
+                                        {availableBooks &&
+                                            availableBooks.map((book) => (
+                                                <MenuItem
+                                                    value={book._id}
+                                                    key={book._id}
+                                                >
+                                                    {book.title} - ({book._id})
+                                                </MenuItem>
+                                            ))}
+                                    </Select>
+                                </FormControl>
                             </div>
-                            <Button onClick={submitHandle}>
+                            <Button
+                                variant='contained'
+                                onClick={submitHandle}
+                            >
                                 Create new booking
                             </Button>
                         </form>

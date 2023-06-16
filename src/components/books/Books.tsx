@@ -6,6 +6,7 @@ import { bookSlice } from '../../store/reducers/BookSlice';
 import Book from './Book';
 import { iBook } from '../../models/iBook';
 import Input from '../input/Input';
+import { TextField } from '@mui/material';
 
 const Books = () => {
     const { books, error, isLoading } = useAppSelector(
@@ -55,12 +56,12 @@ const Books = () => {
     return (
         <Page title='Books'>
             <div className='my-5'>
-                <label>Search by title</label>
-                <Input
-                    type='text'
+                <TextField
+                    id='outlined-basic'
+                    label='Search by title'
+                    variant='outlined'
+                    onChange={(e) => setSearch(e.target.value)}
                     value={search}
-                    onChange={setSearch}
-                    className='ml-[12px]'
                 />
             </div>
             {isLoading && <div>Loading books...</div>}

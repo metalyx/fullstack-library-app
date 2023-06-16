@@ -5,6 +5,7 @@ import AllUsers from './AllUsers';
 import { iUser } from '../../models/iUser';
 import { useNavigate } from 'react-router-dom';
 import Page from '../Page';
+import { Button } from '@mui/material';
 
 const Admin = () => {
     const navigate = useNavigate();
@@ -38,7 +39,12 @@ const Admin = () => {
             {!userInfo && <div>Checking permissions...</div>}
             <div>
                 <div className='flex gap-4'>
-                    <button onClick={handleShowUsers}>Show All Users</button>
+                    <Button
+                        variant='contained'
+                        onClick={handleShowUsers}
+                    >
+                        Show All Users
+                    </Button>
                     {/* <button>Button</button>
                         <button>Button</button>
                         <button>Button</button>

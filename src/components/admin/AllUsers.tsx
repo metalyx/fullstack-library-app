@@ -1,5 +1,14 @@
 import React from 'react';
 import { iUser } from '../../models/iUser';
+import {
+    Card,
+    CardContent,
+    List,
+    ListItem,
+    ListItemIcon,
+    ListItemText,
+} from '@mui/material';
+import { HowToReg } from '@mui/icons-material';
 
 interface iAllUsers {
     users: iUser[];
@@ -14,6 +23,21 @@ const AllUsers: React.FC<iAllUsers> = ({ users }) => {
                         key={user.username}
                         className='border-solid p-2 border border-black-600'
                     >
+                        <Card elevation={4}>
+                            <CardContent>
+                                <List dense>
+                                    <ListItem>
+                                        <ListItemIcon>
+                                            <HowToReg />
+                                        </ListItemIcon>
+                                        <ListItemText
+                                            secondary='User ID'
+                                            primary={booking.booker._id}
+                                        />
+                                    </ListItem>
+                                </List>
+                            </CardContent>
+                        </Card>
                         <div>
                             ID: <span>{user._id}</span>
                         </div>

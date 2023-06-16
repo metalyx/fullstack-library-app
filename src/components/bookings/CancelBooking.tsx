@@ -1,9 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import Page from '../Page';
 import { Axios } from '../../utils/Axios';
 import { iUser } from '../../models/iUser';
 import { iBooking } from '../../models/iBooking';
 import { useNavigate } from 'react-router-dom';
+import FormControl from '@mui/material/FormControl';
+import InputLabel from '@mui/material/InputLabel';
+import Select, { SelectChangeEvent } from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import { Button } from '@mui/material';
 
 const CancelBooking = () => {
     const [users, setUsers] = useState<iUser[]>();
@@ -16,11 +21,11 @@ const CancelBooking = () => {
 
     const navigate = useNavigate();
 
-    const bookerSelectHandle = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const bookerSelectHandle = (e: SelectChangeEvent<any>) => {
         setSelectedUser(e.target.value);
     };
 
-    const bookingsSelectHandle = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const bookingsSelectHandle = (e: SelectChangeEvent<any>) => {
         setSelectedBooking(e.target.value);
     };
 
@@ -75,10 +80,14 @@ const CancelBooking = () => {
         }
     };
 
+    const getActiveBookings = useCallback(() => {
+        return [...bookingsOfUsers].filter((booking) => booking.isActive);
+    }, [bookingsOfUsers]);
+
     useEffect(() => {
         if (isSuccess) {
             setTimeout(() => {
-                return navigate('/books');
+                return navigate('/bookings');
             }, 3000);
         }
     }, [isSuccess]);
@@ -94,54 +103,74 @@ const CancelBooking = () => {
                 <>
                     {error && <p className='text-red-600 text-xl'>{error}</p>}
                     <form onSubmit={(e) => e.preventDefault()}>
-                        <label htmlFor='bookerSelect'>Booker</label>
-                        <select
-                            id='bookerSelect'
-                            onChange={bookerSelectHandle}
-                            defaultValue=''
-                        >
-                            <option value=''>-</option>
-                            {users &&
-                                users.map((user) => (
-                                    <option
-                                        key={user._id}
-                                        value={user._id}
-                                    >
-                                        ({user._id})-{user.username}
-                                    </option>
-                                ))}
-                        </select>
-                        {bookingsOfUsers.length === 0 && (
+                        <FormControl fullWidth>
+                            <InputLabel id='booker-select-label'>
+                                Booker
+                            </InputLabel>
+                            <Select
+                                labelId='booker-select-label'
+                                id='booker-select'
+                                value={selectedUser}
+                                label='Booker'
+                                onChange={bookerSelectHandle}
+                            >
+                                <MenuItem value=''>-</MenuItem>
+                                {users &&
+                                    users.map((user) => (
+                                        <MenuItem
+                                            value={user._id}
+                                            key={user._id}
+                                        >
+                                            {user.username} - ({user._id})
+                                        </MenuItem>
+                                    ))}
+                            </Select>
+                        </FormControl>
+                        {getActiveBookings().length === 0 && (
                             <div className='my-4'>No bookings here</div>
                         )}
-                        {!!bookingsOfUsers.length && (
-                            <div className='my-4'>
-                                <label htmlFor='bookingsSelect'>Bookings</label>
-                                <select
-                                    id='bookingsSelect'
+                        {!!getActiveBookings().length && (
+                            <FormControl
+                                fullWidth
+                                sx={{
+                                    my: 4,
+                                }}
+                            >
+                                <InputLabel id='booking-select-label'>
+                                    Booking
+                                </InputLabel>
+                                <Select
+                                    labelId='booking-select-label'
+                                    id='booking-select'
+                                    value={selectedBooking}
+                                    label='Booking'
                                     onChange={bookingsSelectHandle}
-                                    defaultValue=''
                                 >
-                                    <option>-</option>
-                                    {bookingsOfUsers.map((booking) => (
-                                        <option value={booking._id}>
-                                            ({booking.isActive},{' '}
-                                            {new Date(
-                                                parseInt(booking.date)
-                                            ).toLocaleString()}
-                                            )-{booking.book.title}
-                                        </option>
-                                    ))}
-                                </select>
-                            </div>
+                                    <MenuItem value=''>-</MenuItem>
+                                    {bookingsOfUsers &&
+                                        getActiveBookings().map((booking) => (
+                                            <MenuItem
+                                                value={booking._id}
+                                                key={booking._id}
+                                            >
+                                                (
+                                                {new Date(
+                                                    parseInt(booking.date)
+                                                ).toLocaleString()}
+                                                ) - {booking.book.title}
+                                            </MenuItem>
+                                        ))}
+                                </Select>
+                            </FormControl>
                         )}
                         {selectedBooking && (
-                            <button
+                            <Button
                                 onClick={cancelBookingHandle}
                                 disabled={isLoadingCancel}
+                                variant='contained'
                             >
                                 Cancel this booking
-                            </button>
+                            </Button>
                         )}
                     </form>
                 </>
