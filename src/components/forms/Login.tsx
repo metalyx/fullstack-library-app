@@ -2,6 +2,7 @@ import { useAppSelector } from '../../hooks/redux';
 import { Navigate, redirect } from 'react-router-dom';
 import { useEffect } from 'react';
 import LoginForm from './LoginForm';
+import { Typography } from '@mui/material';
 
 interface iLogin {
     registration?: boolean;
@@ -22,10 +23,26 @@ const Login: React.FC<iLogin> = ({ registration, successReg }) => {
             {!isLoggedIn && (
                 <div>
                     {!registration && (
-                        <h1 className='text-center'>Library login</h1>
+                        <Typography
+                            variant='h3'
+                            component='h1'
+                            sx={{
+                                textAlign: 'center',
+                            }}
+                        >
+                            Library login
+                        </Typography>
                     )}
                     {registration && (
-                        <h1 className='text-center'>Registration</h1>
+                        <Typography
+                            variant='h3'
+                            component='h1'
+                            sx={{
+                                textAlign: 'center',
+                            }}
+                        >
+                            Registration
+                        </Typography>
                     )}
                     <LoginForm
                         registration={registration}

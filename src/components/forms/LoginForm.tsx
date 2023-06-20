@@ -5,9 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { BASE_URL } from '../../constants/BASE_URL';
 import { setToken } from '../../utils/Axios';
-import Input from '../input/Input';
-import Button from '../Buttons/Button';
 import ErrorSpan from '../error-span/ErrorSpan';
+import { Box, Button, TextField } from '@mui/material';
+import Loader from '../loader/Loader';
+import { LoadingButton } from '@mui/lab';
 
 interface iErrors {
     login: string;
@@ -40,7 +41,7 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
         if (login.trim().length <= 0) {
             setErrors((prevState: iErrors) => ({
                 ...prevState,
-                login: 'Login cannot be empty',
+                login: 'Username cannot be empty',
             }));
             errorCounter += 1;
         } else {
@@ -186,7 +187,7 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
 
     return (
         <div>
-            {isLoading && <div>Loading...</div>}
+            {/* {isLoading && <div>Loading...</div>} */}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -198,74 +199,111 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
                     </div>
                 )}
                 <div className='flex gap-4 my-6 justify-center'>
-                    <div className='flex flex-col gap-2 justify-center'>
-                        <label htmlFor='loginField'>Login</label>
-                        <label htmlFor='passwordField'>Password</label>
-                    </div>
                     <div className='flex flex-col gap-2'>
-                        <Input
+                        <TextField
+                            label='Username'
+                            variant='outlined'
                             id='loginField'
                             type='text'
                             value={login}
-                            onChange={setLogin}
-                            isValid={errors.login.length === 0}
+                            onChange={(e) => setLogin(e.target.value)}
+                            error={errors.login.length !== 0}
+                            helperText={errors.login}
                         />
-
-                        <Input
+                        <TextField
                             id='passwordField'
                             type='password'
+                            label='Password'
+                            variant='outlined'
                             value={password}
-                            onChange={setPassword}
-                            isValid={errors.password.length === 0}
+                            onChange={(e) => setPassword(e.target.value)}
+                            error={errors.password.length !== 0}
+                            helperText={errors.password}
                         />
                     </div>
                 </div>
                 <div className='flex flex-col gap-3'>
-                    <ErrorSpan isVisible={!!errors.login}>
+                    {/* <ErrorSpan isVisible={!!errors.login}>
                         {errors.login}
                     </ErrorSpan>
                     <ErrorSpan isVisible={!!errors.password}>
                         {errors.password}
-                    </ErrorSpan>
-                    <ErrorSpan isVisible={!!errors.invalidCredentials}>
+                    </ErrorSpan> */}
+                    <ErrorSpan
+                        isVisible={!!errors.invalidCredentials}
+                        className='text-center'
+                    >
                         {errors.invalidCredentials}
                     </ErrorSpan>
                     {!registration && (
-                        <>
-                            <Button
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <LoadingButton
                                 type='button'
+                                variant='contained'
                                 disabled={isLoading}
+                                loading={isLoading}
                                 onClick={signIn}
+                                sx={{
+                                    width: 'fit-content',
+                                    mb: 2,
+                                }}
                             >
                                 Sign In
-                            </Button>
-                            <Button
+                            </LoadingButton>
+                            <LoadingButton
                                 type='button'
                                 disabled={isLoading}
                                 onClick={handleNeedAccount}
+                                sx={{
+                                    width: 'fit-content',
+                                }}
+                                variant='outlined'
                             >
                                 Don't have an account?
-                            </Button>
-                        </>
+                            </LoadingButton>
+                        </Box>
                     )}
 
                     {registration && (
-                        <>
-                            <Button
+                        <Box
+                            sx={{
+                                display: 'flex',
+                                flexDirection: 'column',
+                                alignItems: 'center',
+                            }}
+                        >
+                            <LoadingButton
                                 type='button'
                                 disabled={isLoading}
                                 onClick={handleRegister}
+                                loading={isLoading}
+                                variant='contained'
+                                sx={{
+                                    width: 'fit-content',
+                                    mb: 2,
+                                }}
                             >
                                 Register
-                            </Button>
-                            <Button
+                            </LoadingButton>
+                            <LoadingButton
                                 type='button'
                                 disabled={isLoading}
                                 onClick={handleBackToLogin}
+                                loading={isLoading}
+                                variant='outlined'
+                                sx={{
+                                    width: 'fit-content',
+                                }}
                             >
                                 Already have an account?
-                            </Button>
-                        </>
+                            </LoadingButton>
+                        </Box>
                     )}
                 </div>
             </form>

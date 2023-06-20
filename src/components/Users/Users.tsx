@@ -6,8 +6,9 @@ import { iUser } from '../../models/iUser';
 import { useNavigate } from 'react-router-dom';
 import Page from '../Page';
 import { Button } from '@mui/material';
+import RegisterNewUser from './RegisterNewUser';
 
-const Admin = () => {
+const Users = () => {
     const navigate = useNavigate();
 
     const userInfo = useAppSelector((state) => state.userReducer.user);
@@ -17,7 +18,11 @@ const Admin = () => {
 
     useEffect(() => {
         if (userInfo) {
-            if (userInfo.roles.find((role) => role === 'ADMIN') === undefined) {
+            if (
+                userInfo.roles.find(
+                    (role) => role === 'ADMIN' || role === 'LIBRARIAN'
+                ) === undefined
+            ) {
                 return navigate(-1);
             }
         }
@@ -27,6 +32,14 @@ const Admin = () => {
         if (users.length === 0) {
             const allUsers = await getUsersInfo();
             setUsers(allUsers);
+        }
+    };
+
+    const handleRegisterNewUser = async () => {
+        if (userInfo) {
+            if (userInfo.roles.indexOf('ADMIN') !== -1) {
+                setAdminView(<RegisterNewUser />);
+            }
         }
     };
 
@@ -45,11 +58,14 @@ const Admin = () => {
                     >
                         Show All Users
                     </Button>
-                    {/* <button>Button</button>
-                        <button>Button</button>
-                        <button>Button</button>
-                        <button>Button</button>
-                        <button>Button</button> */}
+                    {userInfo && userInfo.roles.indexOf('ADMIN') !== -1 && (
+                        <Button
+                            variant='contained'
+                            onClick={handleRegisterNewUser}
+                        >
+                            Register new user
+                        </Button>
+                    )}
                 </div>
                 <div>{adminView}</div>
             </div>
@@ -57,4 +73,4 @@ const Admin = () => {
     );
 };
 
-export default Admin;
+export default Users;

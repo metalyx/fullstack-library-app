@@ -26,7 +26,7 @@ class authController {
                 });
             }
 
-            const { username, password } = req.body;
+            const { username, password, roles } = req.body;
             const candidate = await User.findOne({ username });
 
             if (candidate) {
@@ -36,7 +36,8 @@ class authController {
             }
 
             const hashedPassword = bcrypt.hashSync(password, 7);
-            const userRole = await Role.findOne({ value: 'USER' });
+            // CONTINUE HERE DEVELOP CREATING REGISTRATION
+            const userRole = await Role.find(roles.map(()));
             const user = new User({
                 username,
                 password: hashedPassword,

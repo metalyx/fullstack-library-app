@@ -5,7 +5,7 @@ import Login from './components/forms/Login';
 import Layout from './components/Layout';
 import Home from './components/Home';
 import Books from './components/books/Books';
-import Admin from './components/admin/Admin';
+import Users from './components/Users/Users';
 import Profile from './components/Profile';
 import { useAppDispatch } from './hooks/redux';
 import { userSlice } from './store/reducers/UserSlice';
@@ -91,7 +91,7 @@ const App = () => {
                             />
                             <Route
                                 path='/users'
-                                element={<Admin />}
+                                element={<Users />}
                             />
                             <Route
                                 path='/bookings'

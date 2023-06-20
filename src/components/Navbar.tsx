@@ -26,7 +26,6 @@ interface iPageObject {
     roles?: iRole[];
 }
 
-// const pages = ['Home', 'Books', 'Blog'];
 const pages: iPageObject[] = [
     { title: 'Home', path: '/' },
     { title: 'Books', path: '/books' },
@@ -41,7 +40,6 @@ const Navbar = () => {
     const { logOut, setUser } = userSlice.actions;
     const dispatch = useAppDispatch();
 
-    const location = useLocation();
     const navigate = useNavigate();
 
     const [anchorElNav, setAnchorElNav] = useState<null | HTMLElement>(null);
@@ -320,8 +318,7 @@ const Navbar = () => {
                                     },
                                 }}
                             >
-                                Log Out
-                                {/* <span className='text-white'>Log Out</span> */}
+                                <span className='mr-2'>Log Out</span>
                                 <Logout
                                     sx={{
                                         color: 'white',

@@ -12,6 +12,7 @@ router.post(
             'password',
             'Password cannot be less than 4 characters length'
         ).isLength({ min: 4 }),
+        roleMiddleware(['ADMIN']),
     ],
     authController.registration
 );
