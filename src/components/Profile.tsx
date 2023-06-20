@@ -11,30 +11,22 @@ const Profile = () => {
             className='w-fit'
         >
             {user && (
-                // <ul>
-                //     <li>
-                //         Username: <span>{user.username}</span>
-                //     </li>
-                //     <li>
-                //         Profile type: <span>{user.roles}</span>
-                //     </li>
-                // </ul>
                 <Card variant='outlined'>
-                    <CardMedia>
-                        <img
-                            src={
-                                'https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'
-                            }
-                        />
-                    </CardMedia>
+                    <CardMedia
+                        component='img'
+                        image='https://st3.depositphotos.com/6672868/13701/v/450/depositphotos_137014128-stock-illustration-user-profile-icon.jpg'
+                        sx={{
+                            height: '200px',
+                        }}
+                    />
                     <CardContent>
+                        <Typography
+                            variant='h4'
+                            component='h2'
+                        >
+                            {user.username}
+                        </Typography>
                         <ul>
-                            <Typography
-                                variant='h4'
-                                component='li'
-                            >
-                                {user.username}
-                            </Typography>
                             <li>
                                 Username: <span>{user.username}</span>
                             </li>

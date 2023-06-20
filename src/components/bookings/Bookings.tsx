@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import Page from '../Page';
 import { Axios } from '../../utils/Axios';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';
@@ -6,7 +6,7 @@ import { iBooking } from '../../models/iBooking';
 import Booking from './Booking';
 import { bookingSlice } from '../../store/reducers/BookingSlice';
 import { useNavigate } from 'react-router-dom';
-import { Button, Grid } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 
 const Bookings = () => {
     const { bookings, error, isLoading } = useAppSelector(
@@ -15,6 +15,9 @@ const Bookings = () => {
     const { setBookings, setError, setIsLoading } = bookingSlice.actions;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+
+    const [search, setSearch] = useState('');
+    const [filteredBookings, setFilteredBookings] = useState(bookings);
 
     useEffect(() => {
         setIsLoading(true);
@@ -52,6 +55,24 @@ const Bookings = () => {
         });
     }, [bookings]);
 
+    useEffect(() => {
+        setFilteredBookings(sortDate());
+    }, [bookings]);
+
+    useEffect(() => {
+        if (search === '') {
+            setFilteredBookings(bookings);
+        }
+
+        const filtered = bookings.filter(
+            (booking) =>
+                booking.booker.username.toLowerCase().includes(search) ||
+                booking.book.title.toLowerCase().includes(search)
+        );
+
+        setFilteredBookings(filtered);
+    }, [search]);
+
     return (
         <Page title='Bookings'>
             <div className='my-4'>
@@ -60,6 +81,7 @@ const Bookings = () => {
                     onClick={redirectToCreateNewBookingPage}
                     sx={{
                         mr: 2,
+                        height: '56px',
                     }}
                 >
                     Create new booking
@@ -67,9 +89,20 @@ const Bookings = () => {
                 <Button
                     variant='contained'
                     onClick={redirectToCancelBookingPage}
+                    sx={{
+                        height: '56px',
+                        mr: 2,
+                    }}
                 >
                     Cancel booking
                 </Button>
+                <TextField
+                    id='outlined-basic'
+                    label='Search'
+                    variant='outlined'
+                    value={search}
+                    onChange={(e) => setSearch(e.target.value)}
+                />
             </div>
             {isLoading && !error && <div>Loading...</div>}
             {!isLoading && (
@@ -77,7 +110,7 @@ const Bookings = () => {
                     container
                     spacing={2}
                 >
-                    {sortDate().map((booking: iBooking) => (
+                    {filteredBookings.map((booking: iBooking) => (
                         <Grid
                             key={booking._id}
                             item

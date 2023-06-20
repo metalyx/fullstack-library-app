@@ -35,7 +35,7 @@ const Admin = () => {
     }, [users]);
 
     return (
-        <Page title='Admin menu'>
+        <Page title='Users'>
             {!userInfo && <div>Checking permissions...</div>}
             <div>
                 <div className='flex gap-4'>

@@ -90,7 +90,7 @@ const App = () => {
                                 element={<Profile />}
                             />
                             <Route
-                                path='/admin'
+                                path='/users'
                                 element={<Admin />}
                             />
                             <Route

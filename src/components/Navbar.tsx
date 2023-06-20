@@ -18,6 +18,7 @@ import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
 import { blue } from '../constants/STYLES';
 import { iRole } from '../models/iRole';
+import { Logout } from '@mui/icons-material';
 
 interface iPageObject {
     title: string;
@@ -31,7 +32,7 @@ const pages: iPageObject[] = [
     { title: 'Books', path: '/books' },
     { title: 'Profile', path: '/profile' },
     { title: 'Bookings', path: '/bookings', roles: ['LIBRARIAN', 'ADMIN'] },
-    { title: 'Admin', path: '/admin', roles: ['ADMIN'] },
+    { title: 'Users', path: '/users', roles: ['LIBRARIAN', 'ADMIN'] },
 ];
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
@@ -65,6 +66,11 @@ const Navbar = () => {
         window.localStorage.removeItem('token');
         dispatch(logOut());
         navigate('/login');
+    };
+
+    const handleLogout = () => {
+        handleCloseNavMenu();
+        loginOut();
     };
 
     useEffect(() => {
@@ -235,6 +241,11 @@ const Navbar = () => {
                                             </Link>
                                         ) : null
                                     )}
+                                    <MenuItem onClick={handleLogout}>
+                                        <span className='text-blue-600'>
+                                            Log Out
+                                        </span>
+                                    </MenuItem>
                                 </div>
                             </Menu>
                         </Box>
@@ -255,7 +266,6 @@ const Navbar = () => {
                         >
                             <Link to='/'>MyLibrary</Link>
                         </Typography>
-
                         <Box
                             sx={{
                                 flexGrow: 1,
@@ -297,6 +307,27 @@ const Navbar = () => {
                                         )}
                                 </React.Fragment>
                             ))}
+                        </Box>
+
+                        <Box sx={{ flexGrow: 0 }}>
+                            <Button
+                                onClick={handleLogout}
+                                sx={{
+                                    color: 'white',
+                                    transition: '200ms',
+                                    ':hover': {
+                                        opacity: '0.7',
+                                    },
+                                }}
+                            >
+                                Log Out
+                                {/* <span className='text-white'>Log Out</span> */}
+                                <Logout
+                                    sx={{
+                                        color: 'white',
+                                    }}
+                                />
+                            </Button>
                         </Box>
 
                         {/* User icon functionality for future */}

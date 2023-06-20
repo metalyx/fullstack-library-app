@@ -6,7 +6,7 @@ import { bookSlice } from '../../store/reducers/BookSlice';
 import Book from './Book';
 import { iBook } from '../../models/iBook';
 import Input from '../input/Input';
-import { TextField } from '@mui/material';
+import { Grid, TextField } from '@mui/material';
 
 const Books = () => {
     const { books, error, isLoading } = useAppSelector(
@@ -66,14 +66,30 @@ const Books = () => {
             </div>
             {isLoading && <div>Loading books...</div>}
             {!isLoading && error.length === 0 && (
-                <div className='flex flex-wrap gap-4 justify-center'>
+                // <div className='flex flex-wrap gap-4 justify-center'>
+                <Grid
+                    container
+                    spacing={2}
+                    sx={{
+                        mt: 2,
+                    }}
+                    gridAutoRows='1fr'
+                >
                     {booksToShow.map((book) => (
-                        <Book
+                        <Grid
                             key={book._id}
-                            book={book}
-                        />
+                            item
+                            xs={12}
+                            md={6}
+                            lg={4}
+                        >
+                            <Book
+                                key={book._id}
+                                book={book}
+                            />
+                        </Grid>
                     ))}
-                </div>
+                </Grid>
             )}
             {error.length > 0 && <div className='text-red-600'>{error}</div>}
         </Page>

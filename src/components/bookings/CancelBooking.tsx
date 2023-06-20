@@ -127,7 +127,7 @@ const CancelBooking = () => {
                             </Select>
                         </FormControl>
                         {getActiveBookings().length === 0 && (
-                            <div className='my-4'>No bookings here</div>
+                            <div className='my-4'>No active bookings</div>
                         )}
                         {!!getActiveBookings().length && (
                             <FormControl
