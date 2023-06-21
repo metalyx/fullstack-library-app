@@ -3,18 +3,30 @@
     "private": true,
     "version": "0.0.0",
     "type": "module",
+    "author": {
+        "name": "Vitalii Tereshchenko",
+        "email": "metalyx3@gmail.com",
+        "url": "https://github.com/metalyx"
+    },
     "scripts": {
         "tsc": "./node_modules/typescript/bin/tsc",
         "dev:frontend": "vite",
-        "build": "npm run tsc && vite build",
-        "build:local": "tsc && vite build",
+        "build": "npm run tsc && vite build --emptyOutDir",
+        "build:local": "tsc && vite build --emptyOutDir",
         "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
         "preview": "vite preview",
-        "start": "node server.js",
-        "dev:backend": "nodemon server.js",
-        "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\""
+        "start": "node server/server.js",
+        "dev:backend": "nodemon server/server.js",
+        "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+        "render": "npm install && npm run build"
     },
     "dependencies": {
+        "@emotion/react": "^11.11.1",
+        "@emotion/styled": "^11.11.0",
+        "@fontsource/roboto": "^5.0.3",
+        "@mui/icons-material": "^5.11.16",
+        "@mui/lab": "^5.0.0-alpha.134",
+        "@mui/material": "^5.13.5",
         "@reduxjs/toolkit": "^1.9.5",
         "@types/react-redux": "^7.1.25",
         "axios": "^1.4.0",
@@ -27,6 +39,7 @@
         "mongoose": "^7.2.1",
         "react": "^18.2.0",
         "react-dom": "^18.2.0",
+        "react-error-boundary": "^4.0.10",
         "react-redux": "^8.0.5",
         "react-router-dom": "^6.11.2",
         "serve": "^14.2.0"
