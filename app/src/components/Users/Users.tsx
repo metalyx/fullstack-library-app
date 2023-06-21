@@ -5,7 +5,7 @@ import AllUsers from './AllUsers';
 import { iUser } from '../../models/iUser';
 import { useNavigate } from 'react-router-dom';
 import Page from '../Page';
-import { Box, Button } from '@mui/material';
+import { Button } from '@mui/material';
 import RegisterNewUser from './RegisterNewUser';
 
 const Users = () => {

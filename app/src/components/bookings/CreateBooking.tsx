@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import Page from '../Page';
 import { Axios } from '../../utils/Axios';
 import { iUser } from '../../models/iUser';

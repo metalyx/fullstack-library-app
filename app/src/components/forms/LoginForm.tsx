@@ -6,8 +6,7 @@ import axios from 'axios';
 import { BASE_URL } from '../../constants/BASE_URL';
 import { setToken } from '../../utils/Axios';
 import ErrorSpan from '../error-span/ErrorSpan';
-import { Box, Button, TextField } from '@mui/material';
-import Loader from '../loader/Loader';
+import { Box, TextField } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 
 interface iErrors {

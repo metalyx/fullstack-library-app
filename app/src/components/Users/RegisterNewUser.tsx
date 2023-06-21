@@ -4,7 +4,6 @@ import { useAppSelector } from '../../hooks/redux';
 import Loader from '../loader/Loader';
 import {
     Box,
-    Button,
     Checkbox,
     FormControl,
     FormHelperText,

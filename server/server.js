@@ -9,7 +9,14 @@ import bookingRouter from './routers/bookingRouter.js';
 import adminRouter from './routers/adminRouter.js';
 import { config } from 'dotenv';
 import cors from 'cors';
-config();
+
+if (process.env.NODE_ENV === 'production') {
+    config({
+        path: '../.env',
+    });
+} else {
+    config();
+}
 
 const PORT = process.env.PORT || 5000;
 const rootAPIPath = '/api';

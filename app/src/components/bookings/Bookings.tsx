@@ -6,7 +6,7 @@ import { iBooking } from '../../models/iBooking';
 import Booking from './Booking';
 import { bookingSlice } from '../../store/reducers/BookingSlice';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, Grid, TextField } from '@mui/material';
+import { Button, Grid, TextField } from '@mui/material';
 
 const Bookings = () => {
     const { bookings, error, isLoading } = useAppSelector(

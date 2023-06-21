@@ -5,7 +5,6 @@ import { useAppDispatch, useAppSelector } from '../../hooks/redux';
 import { bookSlice } from '../../store/reducers/BookSlice';
 import Book from './Book';
 import { iBook } from '../../models/iBook';
-import Input from '../input/Input';
 import { Grid, TextField } from '@mui/material';
 
 const Books = () => {
