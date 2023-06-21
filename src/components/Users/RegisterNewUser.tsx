@@ -99,7 +99,7 @@ const RegisterNewUser: React.FC<iRegisterNewUser> = ({ handleShowUsers }) => {
         if (!validateUserName() && !validatePassword() && !validateRoles()) {
             try {
                 setIsNetworkLoading(true);
-                await Axios.post('/api/auth/registration', {
+                await Axios.post('/api/auth/registrationWithRole', {
                     username,
                     password,
                     roles,

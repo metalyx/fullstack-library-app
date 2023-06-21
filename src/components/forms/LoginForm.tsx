@@ -36,39 +36,53 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
 
     const navigate = useNavigate();
 
-    const isValidForm = (): boolean => {
-        let errorCounter = 0;
+    const checkUsername = () => {
         if (login.trim().length <= 0) {
             setErrors((prevState: iErrors) => ({
                 ...prevState,
                 login: 'Username cannot be empty',
             }));
-            errorCounter += 1;
+            return true;
         } else {
             setErrors((prevState: iErrors) => ({
                 ...prevState,
                 login: '',
             }));
         }
+    };
 
+    const checkPassword = () => {
         if (password.length <= 3) {
             setErrors((prevState: iErrors) => ({
                 ...prevState,
                 password: 'Password cannot be less than 4 characters',
             }));
-            errorCounter += 1;
+
+            return true;
         } else {
             setErrors((prevState: iErrors) => ({
                 ...prevState,
                 password: '',
             }));
         }
+    };
 
-        if (errorCounter > 0) {
-            return false;
-        } else {
-            return true;
+    const isValidForm = (): boolean => {
+        let isInvalid = false;
+
+        if (checkUsername()) {
+            isInvalid = true;
         }
+
+        if (checkPassword()) {
+            isInvalid = true;
+        }
+
+        if (isInvalid) {
+            return false;
+        }
+
+        return true;
     };
 
     const signIn = async () => {
@@ -187,7 +201,6 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
 
     return (
         <div>
-            {/* {isLoading && <div>Loading...</div>} */}
             <form
                 onSubmit={(e) => {
                     e.preventDefault();
@@ -205,6 +218,7 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
                             variant='outlined'
                             id='loginField'
                             type='text'
+                            onBlur={checkUsername}
                             value={login}
                             onChange={(e) => setLogin(e.target.value)}
                             error={errors.login.length !== 0}
@@ -215,6 +229,7 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
                             type='password'
                             label='Password'
                             variant='outlined'
+                            onBlur={checkPassword}
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
                             error={errors.password.length !== 0}
@@ -223,12 +238,6 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
                     </div>
                 </div>
                 <div className='flex flex-col gap-3'>
-                    {/* <ErrorSpan isVisible={!!errors.login}>
-                        {errors.login}
-                    </ErrorSpan>
-                    <ErrorSpan isVisible={!!errors.password}>
-                        {errors.password}
-                    </ErrorSpan> */}
                     <ErrorSpan
                         isVisible={!!errors.invalidCredentials}
                         className='text-center'

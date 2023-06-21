@@ -13,10 +13,23 @@ router.post(
             'password',
             'Password cannot be less than 4 characters length'
         ).isLength({ min: 4 }),
-        roleMiddleware(['ADMIN']),
     ],
     authController.registration
 );
+
+router.post(
+    '/registrationWithRole',
+    [
+        check('username', 'Username cannot be empty').notEmpty(),
+        check(
+            'password',
+            'Password cannot be less than 4 characters length'
+        ).isLength({ min: 4 }),
+        roleMiddleware(['ADMIN']),
+    ],
+    authController.registrationWithRole
+);
+
 router.post(
     '/login',
     [check('username', 'Username cannot be empty').notEmpty()],
