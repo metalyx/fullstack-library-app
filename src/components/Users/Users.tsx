@@ -5,7 +5,7 @@ import AllUsers from './AllUsers';
 import { iUser } from '../../models/iUser';
 import { useNavigate } from 'react-router-dom';
 import Page from '../Page';
-import { Button } from '@mui/material';
+import { Box, Button } from '@mui/material';
 import RegisterNewUser from './RegisterNewUser';
 
 const Users = () => {
@@ -28,17 +28,20 @@ const Users = () => {
         }
     }, [userInfo]);
 
-    const handleShowUsers = async () => {
-        if (users.length === 0) {
+    const handleShowUsers = async (invalidate = false) => {
+        if (users.length === 0 || invalidate) {
             const allUsers = await getUsersInfo();
             setUsers(allUsers);
         }
+        setAdminView(<AllUsers users={users} />);
     };
 
     const handleRegisterNewUser = async () => {
         if (userInfo) {
             if (userInfo.roles.indexOf('ADMIN') !== -1) {
-                setAdminView(<RegisterNewUser />);
+                setAdminView(
+                    <RegisterNewUser handleShowUsers={handleShowUsers} />
+                );
             }
         }
     };
@@ -50,25 +53,23 @@ const Users = () => {
     return (
         <Page title='Users'>
             {!userInfo && <div>Checking permissions...</div>}
-            <div>
-                <div className='flex gap-4'>
+            <div className='flex gap-4'>
+                <Button
+                    variant='contained'
+                    onClick={() => handleShowUsers()}
+                >
+                    Show All Users
+                </Button>
+                {userInfo && userInfo.roles.indexOf('ADMIN') !== -1 && (
                     <Button
                         variant='contained'
-                        onClick={handleShowUsers}
+                        onClick={handleRegisterNewUser}
                     >
-                        Show All Users
+                        Register new user
                     </Button>
-                    {userInfo && userInfo.roles.indexOf('ADMIN') !== -1 && (
-                        <Button
-                            variant='contained'
-                            onClick={handleRegisterNewUser}
-                        >
-                            Register new user
-                        </Button>
-                    )}
-                </div>
-                <div>{adminView}</div>
+                )}
             </div>
+            <div>{adminView}</div>
         </Page>
     );
 };

@@ -18,7 +18,9 @@ const generateAccessToken = (id, roles) => {
 class authController {
     async registration(req, res) {
         try {
+            // Get errors from validation middleware
             const errors = validationResult(req);
+
             if (!errors.isEmpty()) {
                 return res.status(400).json({
                     message: 'Validation errors',
@@ -26,7 +28,8 @@ class authController {
                 });
             }
 
-            const { username, password, roles } = req.body;
+            let { username, password, roles } = req.body;
+
             const candidate = await User.findOne({ username });
 
             if (candidate) {
@@ -35,17 +38,36 @@ class authController {
                 });
             }
 
+            // if roles array has not been provided -> set default value as USER
+            if (!Array.isArray(roles) || roles.length === 0) {
+                roles = ['USER'];
+            }
+
             const hashedPassword = bcrypt.hashSync(password, 7);
-            // CONTINUE HERE DEVELOP CREATING REGISTRATION
-            const userRole = await Role.find(roles.map(()));
+
+            const searchRoles = roles.map((role) => ({
+                value: role,
+            }));
+
+            const promises = searchRoles.map(async (role) => {
+                const currentRole = await Role.find(role);
+
+                return currentRole[0].value;
+            });
+
+            const userRoles = await Promise.all(promises);
+
             const user = new User({
                 username,
                 password: hashedPassword,
-                roles: [userRole.value],
+                roles: userRoles,
             });
+
             await user.save();
+
             res.status(201).json({ message: 'User successfully created.' });
         } catch (e) {
+            console.log(e);
             res.status(400).json({ message: 'Registration error' });
         }
     }

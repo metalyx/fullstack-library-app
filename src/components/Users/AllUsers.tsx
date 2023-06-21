@@ -35,15 +35,19 @@ const AllUsers: React.FC<iAllUsers> = ({ users }) => {
         );
     }, []);
 
+    const sortUsers = useCallback(() => {
+        return [...users].reverse();
+    }, [users]);
+
     return (
         <Grid
             container
             spacing={2}
             sx={{
-                mt: 2,
+                my: 2,
             }}
         >
-            {users.map((user) => (
+            {sortUsers().map((user) => (
                 <Grid
                     key={user._id}
                     item

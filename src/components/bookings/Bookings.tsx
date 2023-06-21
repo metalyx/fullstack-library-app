@@ -62,15 +62,19 @@ const Bookings = () => {
     useEffect(() => {
         if (search === '') {
             setFilteredBookings(bookings);
+        } else {
+            const filtered = bookings.filter(
+                (booking) =>
+                    booking.booker.username
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    booking.book.title
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+            );
+
+            setFilteredBookings(filtered);
         }
-
-        const filtered = bookings.filter(
-            (booking) =>
-                booking.booker.username.toLowerCase().includes(search) ||
-                booking.book.title.toLowerCase().includes(search)
-        );
-
-        setFilteredBookings(filtered);
     }, [search]);
 
     return (
@@ -99,6 +103,7 @@ const Bookings = () => {
                 <TextField
                     id='outlined-basic'
                     label='Search'
+                    placeholder='Book title or username'
                     variant='outlined'
                     value={search}
                     onChange={(e) => setSearch(e.target.value)}

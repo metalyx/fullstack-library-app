@@ -3,6 +3,7 @@ const router = new Router();
 import authController from '../controllers/authController.js';
 import { check } from 'express-validator';
 import authMiddleware from '../middleware/authMiddleware.js';
+import roleMiddleware from '../middleware/roleMiddleware.js';
 
 router.post(
     '/registration',

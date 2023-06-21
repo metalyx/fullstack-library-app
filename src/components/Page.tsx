@@ -1,4 +1,4 @@
-import { Container, Typography } from '@mui/material';
+import { Box, Container, Typography } from '@mui/material';
 import React from 'react';
 
 interface iPage {
@@ -25,6 +25,11 @@ const Page: React.FC<iPage> = ({
                 </Typography>
             </div>
             <div className={`my-5 ${className}`}>{children}</div>
+            <Box
+                sx={{
+                    height: '20px',
+                }}
+            />
         </Container>
     );
 };
