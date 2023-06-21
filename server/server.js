@@ -1,5 +1,5 @@
 import { fileURLToPath } from 'url';
-import path, { dirname } from 'path';
+import path, { dirname, join } from 'path';
 import express, { json } from 'express';
 import { connect } from 'mongoose';
 import authRouter from './routers/authRouter.js';
@@ -25,7 +25,7 @@ const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const dir = dirname(__filename);
 
-app.use('/', express.static('dist'));
+app.use('/', express.static(join(dir, 'dist')));
 
 app.use(cors());
 app.use(json());
