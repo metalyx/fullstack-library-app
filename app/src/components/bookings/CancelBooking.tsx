@@ -102,7 +102,9 @@ const CancelBooking = () => {
             )}
             {!isSuccess && (
                 <>
-                    {error && <p className='text-red-600 text-xl'>{error}</p>}
+                    {error && (
+                        <p className='text-red-600 text-xl my-4'>{error}</p>
+                    )}
                     <form onSubmit={(e) => e.preventDefault()}>
                         <Grid
                             container
