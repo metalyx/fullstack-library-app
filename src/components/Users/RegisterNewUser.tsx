@@ -8,6 +8,7 @@ import {
     Checkbox,
     FormControl,
     FormHelperText,
+    Grid,
     InputLabel,
     ListItemText,
     MenuItem,
@@ -151,101 +152,140 @@ const RegisterNewUser: React.FC<iRegisterNewUser> = ({ handleShowUsers }) => {
                             }}
                         >
                             <form onSubmit={(e) => e.preventDefault()}>
-                                <Box
-                                    sx={{
-                                        display: 'flex',
-                                    }}
+                                <Grid
+                                    container
+                                    spacing={2}
                                 >
-                                    <TextField
-                                        variant='outlined'
-                                        label='Username'
-                                        sx={{ mr: 2 }}
-                                        value={username}
-                                        onChange={(e) =>
-                                            setUsername(e.target.value)
-                                        }
-                                        onBlur={validateUserName}
-                                        error={
-                                            validationErrors.username.length > 0
-                                        }
-                                        helperText={validationErrors.username}
-                                    />
-                                    <TextField
-                                        variant='outlined'
-                                        label='Password'
-                                        type='password'
-                                        value={password}
-                                        onChange={(e) =>
-                                            setPassword(e.target.value)
-                                        }
-                                        onBlur={validatePassword}
-                                        error={
-                                            validationErrors.password.length > 0
-                                        }
-                                        helperText={validationErrors.password}
-                                    />
-                                </Box>
-                                {/* <InputLabel id='multiple-checkbox-label'>
-                                Roles
-                            </InputLabel> */}
-                                <FormControl
-                                    sx={{
-                                        width: 'fit-content',
-                                        minWidth: '210px',
-                                        mt: 3,
-                                    }}
-                                    error={validationErrors.roles.length > 0}
-                                >
-                                    <InputLabel id='multiple-checkbox-label'>
-                                        Roles
-                                    </InputLabel>
-                                    <Select
-                                        labelId='multiple-checkbox-label'
-                                        label='Roles'
-                                        id='multiple-checkbox'
-                                        multiple
-                                        value={roles}
-                                        onChange={handleSelectChange}
-                                        input={<OutlinedInput label='Roles' />}
-                                        renderValue={(selected) => {
-                                            if (typeof selected === 'string') {
-                                                return selected;
-                                            } else {
-                                                return selected.join(', ');
-                                            }
-                                        }}
-                                        onBlur={validateRoles}
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        lg={4}
                                     >
-                                        <MenuItem value='USER'>
-                                            <Checkbox
-                                                checked={
-                                                    roles.indexOf('USER') > -1
+                                        <TextField
+                                            variant='outlined'
+                                            label='Username'
+                                            sx={{ mr: 2, width: '100%' }}
+                                            value={username}
+                                            onChange={(e) =>
+                                                setUsername(e.target.value)
+                                            }
+                                            onBlur={validateUserName}
+                                            error={
+                                                validationErrors.username
+                                                    .length > 0
+                                            }
+                                            helperText={
+                                                validationErrors.username
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        lg={4}
+                                    >
+                                        <TextField
+                                            variant='outlined'
+                                            label='Password'
+                                            sx={{ mr: 2, width: '100%' }}
+                                            type='password'
+                                            value={password}
+                                            onChange={(e) =>
+                                                setPassword(e.target.value)
+                                            }
+                                            onBlur={validatePassword}
+                                            error={
+                                                validationErrors.password
+                                                    .length > 0
+                                            }
+                                            helperText={
+                                                validationErrors.password
+                                            }
+                                        />
+                                    </Grid>
+                                    <Grid
+                                        item
+                                        xs={12}
+                                        sm={6}
+                                        lg={4}
+                                    >
+                                        <FormControl
+                                            sx={{
+                                                width: '100%',
+                                                minWidth: '210px',
+                                                // width: '100%'
+                                            }}
+                                            error={
+                                                validationErrors.roles.length >
+                                                0
+                                            }
+                                        >
+                                            <InputLabel id='multiple-checkbox-label'>
+                                                Roles
+                                            </InputLabel>
+                                            <Select
+                                                labelId='multiple-checkbox-label'
+                                                label='Roles'
+                                                id='multiple-checkbox'
+                                                multiple
+                                                value={roles}
+                                                onChange={handleSelectChange}
+                                                input={
+                                                    <OutlinedInput label='Roles' />
                                                 }
-                                            />
-                                            <ListItemText primary='User' />
-                                        </MenuItem>
-                                        <MenuItem value='LIBRARIAN'>
-                                            <Checkbox
-                                                checked={
-                                                    roles.indexOf('LIBRARIAN') >
-                                                    -1
-                                                }
-                                            />
-                                            <ListItemText primary='Librarian' />
-                                        </MenuItem>
-                                        <MenuItem value='ADMIN'>
-                                            <Checkbox
-                                                checked={
-                                                    roles.indexOf('ADMIN') > -1
-                                                }
-                                            />
-                                            <ListItemText primary='ADMIN' />
-                                        </MenuItem>
-                                    </Select>
-                                    <FormHelperText>
-                                        {validationErrors.roles}
-                                    </FormHelperText>
-                                </FormControl>
+                                                renderValue={(selected) => {
+                                                    if (
+                                                        typeof selected ===
+                                                        'string'
+                                                    ) {
+                                                        return selected;
+                                                    } else {
+                                                        return selected.join(
+                                                            ', '
+                                                        );
+                                                    }
+                                                }}
+                                                onBlur={validateRoles}
+                                            >
+                                                <MenuItem value='USER'>
+                                                    <Checkbox
+                                                        checked={
+                                                            roles.indexOf(
+                                                                'USER'
+                                                            ) > -1
+                                                        }
+                                                    />
+                                                    <ListItemText primary='User' />
+                                                </MenuItem>
+                                                <MenuItem value='LIBRARIAN'>
+                                                    <Checkbox
+                                                        checked={
+                                                            roles.indexOf(
+                                                                'LIBRARIAN'
+                                                            ) > -1
+                                                        }
+                                                    />
+                                                    <ListItemText primary='Librarian' />
+                                                </MenuItem>
+                                                <MenuItem value='ADMIN'>
+                                                    <Checkbox
+                                                        checked={
+                                                            roles.indexOf(
+                                                                'ADMIN'
+                                                            ) > -1
+                                                        }
+                                                    />
+                                                    <ListItemText primary='ADMIN' />
+                                                </MenuItem>
+                                            </Select>
+                                            <FormHelperText>
+                                                {validationErrors.roles}
+                                            </FormHelperText>
+                                        </FormControl>
+                                    </Grid>
+                                </Grid>
                                 <Box
                                     sx={{
                                         mt: 2,

@@ -207,9 +207,9 @@ const LoginForm: React.FC<iLoginForm> = ({ registration, successReg }) => {
                 }}
             >
                 {successReg && (
-                    <div className='text-white p-2 bg-green-600 mt-4'>
+                    <p className='text-lg text-green-600 text-center'>
                         Successful registration
-                    </div>
+                    </p>
                 )}
                 <div className='flex gap-4 my-6 justify-center'>
                     <div className='flex flex-col gap-2'>

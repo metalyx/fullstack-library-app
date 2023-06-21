@@ -6,7 +6,7 @@ import { iBooking } from '../../models/iBooking';
 import Booking from './Booking';
 import { bookingSlice } from '../../store/reducers/BookingSlice';
 import { useNavigate } from 'react-router-dom';
-import { Button, Grid, TextField } from '@mui/material';
+import { Box, Button, Grid, TextField } from '@mui/material';
 
 const Bookings = () => {
     const { bookings, error, isLoading } = useAppSelector(
@@ -79,36 +79,68 @@ const Bookings = () => {
 
     return (
         <Page title='Bookings'>
-            <div className='my-4'>
-                <Button
-                    variant='contained'
-                    onClick={redirectToCreateNewBookingPage}
-                    sx={{
-                        mr: 2,
-                        height: '56px',
-                    }}
+            <Grid
+                container
+                sx={{
+                    my: 3,
+                }}
+                spacing={2}
+            >
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={6}
+                    lg={3}
                 >
-                    Create new booking
-                </Button>
-                <Button
-                    variant='contained'
-                    onClick={redirectToCancelBookingPage}
-                    sx={{
-                        height: '56px',
-                        mr: 2,
-                    }}
+                    <Button
+                        variant='contained'
+                        onClick={redirectToCreateNewBookingPage}
+                        sx={{
+                            height: '56px',
+                            width: '100%',
+                        }}
+                    >
+                        Create new booking
+                    </Button>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    sm={6}
+                    md={6}
+                    lg={3}
                 >
-                    Cancel booking
-                </Button>
-                <TextField
-                    id='outlined-basic'
-                    label='Search'
-                    placeholder='Book title or username'
-                    variant='outlined'
-                    value={search}
-                    onChange={(e) => setSearch(e.target.value)}
-                />
-            </div>
+                    <Button
+                        variant='contained'
+                        onClick={redirectToCancelBookingPage}
+                        sx={{
+                            height: '56px',
+                            width: '100%',
+                        }}
+                    >
+                        Cancel booking
+                    </Button>
+                </Grid>
+                <Grid
+                    item
+                    xs={12}
+                    md={12}
+                    lg={6}
+                >
+                    <TextField
+                        id='outlined-basic'
+                        label='Search'
+                        placeholder='Book title or username'
+                        variant='outlined'
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        sx={{
+                            width: '100%',
+                        }}
+                    />
+                </Grid>
+            </Grid>
             {isLoading && !error && <div>Loading...</div>}
             {!isLoading && (
                 <Grid
