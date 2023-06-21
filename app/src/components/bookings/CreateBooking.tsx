@@ -7,6 +7,8 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
 import {
     FormControl,
+    FormHelperText,
+    Grid,
     InputLabel,
     MenuItem,
     Select,
@@ -25,6 +27,10 @@ const CreateBooking = () => {
     const [bookingForm, setBookingForm] = useState({
         userId: '',
         bookId: '',
+    });
+    const [validationErrors, setValidationErrors] = useState({
+        user: '',
+        book: '',
     });
 
     useEffect(() => {
@@ -74,8 +80,49 @@ const CreateBooking = () => {
         });
     };
 
+    const validateBook = () => {
+        if (!bookingForm.bookId) {
+            setValidationErrors({
+                ...validationErrors,
+                book: 'Selected book is required',
+            });
+            return true;
+        } else {
+            setValidationErrors({
+                ...validationErrors,
+                book: '',
+            });
+            return false;
+        }
+    };
+    const validateBooker = () => {
+        if (!bookingForm.userId) {
+            setValidationErrors({
+                ...validationErrors,
+                user: 'Selected user is required',
+            });
+            return true;
+        } else {
+            setValidationErrors({
+                ...validationErrors,
+                user: '',
+            });
+            return false;
+        }
+    };
+
     const submitHandle = async () => {
-        if (!bookingForm.bookId || !bookingForm.userId) {
+        let formIsInvalid = true;
+
+        if (validateBook()) {
+            formIsInvalid = false;
+        }
+
+        if (validateBooker()) {
+            formIsInvalid = false;
+        }
+
+        if (!formIsInvalid) {
             return;
         }
 
@@ -114,60 +161,104 @@ const CreateBooking = () => {
                     )}
                     {!isLoading && (
                         <form onSubmit={(e) => e.preventDefault()}>
-                            <FormControl fullWidth>
-                                <InputLabel id='booker-select-label'>
-                                    Booker
-                                </InputLabel>
-                                <Select
-                                    labelId='booker-select-label'
-                                    id='booker-select'
-                                    value={bookingForm.userId}
-                                    label='Booker'
-                                    onChange={handleBookerSelect}
-                                >
-                                    <MenuItem value=''>-</MenuItem>
-                                    {users &&
-                                        users.map((user) => (
-                                            <MenuItem
-                                                value={user._id}
-                                                key={user._id}
-                                            >
-                                                {user.username} - ({user._id})
-                                            </MenuItem>
-                                        ))}
-                                </Select>
-                            </FormControl>
-                            <div className='my-4'>
-                                <FormControl fullWidth>
-                                    <InputLabel id='book-select-label'>
-                                        Book title
-                                    </InputLabel>
-                                    <Select
-                                        labelId='book-select-label'
-                                        id='book-select'
-                                        value={bookingForm.bookId}
-                                        label='Book title'
-                                        onChange={handleBookSelect}
-                                    >
-                                        <MenuItem value=''>-</MenuItem>
-                                        {availableBooks &&
-                                            availableBooks.map((book) => (
-                                                <MenuItem
-                                                    value={book._id}
-                                                    key={book._id}
-                                                >
-                                                    {book.title} - ({book._id})
-                                                </MenuItem>
-                                            ))}
-                                    </Select>
-                                </FormControl>
-                            </div>
-                            <Button
-                                variant='contained'
-                                onClick={submitHandle}
+                            <Grid
+                                container
+                                spacing={2}
                             >
-                                Create new booking
-                            </Button>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    lg={4}
+                                >
+                                    <FormControl
+                                        fullWidth
+                                        error={validationErrors.user.length > 0}
+                                    >
+                                        <InputLabel id='booker-select-label'>
+                                            Booker
+                                        </InputLabel>
+                                        <Select
+                                            labelId='booker-select-label'
+                                            id='booker-select'
+                                            value={bookingForm.userId}
+                                            label='Booker'
+                                            onChange={handleBookerSelect}
+                                            onBlur={validateBooker}
+                                        >
+                                            <MenuItem value=''>-</MenuItem>
+                                            {users &&
+                                                users.map((user) => (
+                                                    <MenuItem
+                                                        value={user._id}
+                                                        key={user._id}
+                                                    >
+                                                        {user.username} - (
+                                                        {user._id})
+                                                    </MenuItem>
+                                                ))}
+                                        </Select>
+                                        <FormHelperText>
+                                            {validationErrors.user}
+                                        </FormHelperText>
+                                    </FormControl>
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={12}
+                                    md={6}
+                                    lg={4}
+                                >
+                                    <FormControl
+                                        fullWidth
+                                        error={validationErrors.book.length > 0}
+                                    >
+                                        <InputLabel id='book-select-label'>
+                                            Book title
+                                        </InputLabel>
+                                        <Select
+                                            labelId='book-select-label'
+                                            id='book-select'
+                                            value={bookingForm.bookId}
+                                            label='Book title'
+                                            onChange={handleBookSelect}
+                                            onBlur={validateBook}
+                                        >
+                                            <MenuItem value=''>-</MenuItem>
+                                            {availableBooks &&
+                                                availableBooks.map((book) => (
+                                                    <MenuItem
+                                                        value={book._id}
+                                                        key={book._id}
+                                                    >
+                                                        {book.title} - (
+                                                        {book._id})
+                                                    </MenuItem>
+                                                ))}
+                                        </Select>
+                                        <FormHelperText>
+                                            {validationErrors.book}
+                                        </FormHelperText>
+                                    </FormControl>
+                                </Grid>
+                                <Grid
+                                    item
+                                    xs={8}
+                                    sm={4}
+                                    md={6}
+                                    lg={8}
+                                >
+                                    <Button
+                                        variant='contained'
+                                        onClick={submitHandle}
+                                        sx={{
+                                            width: '100%',
+                                        }}
+                                    >
+                                        Create new booking
+                                    </Button>
+                                </Grid>
+                            </Grid>
                         </form>
                     )}
                 </>
