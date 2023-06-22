@@ -15,9 +15,22 @@ const Bookings = () => {
     const { setBookings, setError, setIsLoading } = bookingSlice.actions;
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
+    const userInfo = useAppSelector((state) => state.userReducer.user);
 
     const [search, setSearch] = useState('');
     const [filteredBookings, setFilteredBookings] = useState(bookings);
+
+    useEffect(() => {
+        if (userInfo) {
+            if (
+                userInfo.roles.find(
+                    (role) => role === 'ADMIN' || role === 'LIBRARIAN'
+                ) === undefined
+            ) {
+                return navigate(-1);
+            }
+        }
+    }, [userInfo]);
 
     useEffect(() => {
         setIsLoading(true);
