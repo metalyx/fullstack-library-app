@@ -17,9 +17,9 @@ You will find detailed information about the app in sections below.
 
 -   Clone repository
 -   `npm install` - installs required dependencies
--   `npm run build` - builds application
+-   `npm run build:local` - builds application (you need to have tsc installed globally; to install it `npm i tsc -g`)
 -   `npm run dev` - for development; concurrently executes `vite` and `nodemon`
--   `cd ./server/ && node server.js` - to start backend that serves static react build.
+-   `cd .\server\`, `node .\server.js` - to start backend that serves static react build.
 
 <i><u>\*I also use .env files with secrets such as login and password for connection to MongoDB and JWT secret. I cannot share those here.</u></i>
 
