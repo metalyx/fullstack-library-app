@@ -10,13 +10,9 @@ import adminRouter from './routers/adminRouter.js';
 import { config } from 'dotenv';
 import cors from 'cors';
 
-if (process.env.NODE_ENV === 'production') {
-    config({
-        path: '../.env',
-    });
-} else {
-    config();
-}
+config({
+    path: '../.env',
+});
 
 const PORT = process.env.PORT || 5000;
 const rootAPIPath = '/api';
