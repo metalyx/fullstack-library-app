@@ -10,16 +10,16 @@ import adminRouter from './routers/adminRouter.js';
 import { config } from 'dotenv';
 import cors from 'cors';
 
-config({
-    path: '../.env',
-});
-
 const PORT = process.env.PORT || 5000;
 const rootAPIPath = '/api';
 
 const app = express();
 const __filename = fileURLToPath(import.meta.url);
 const dir = dirname(__filename);
+
+config({
+    path: path.resolve('.env'),
+});
 
 app.use('/', express.static(join(dir, 'dist')));
 
