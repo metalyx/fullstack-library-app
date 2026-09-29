@@ -8,6 +8,9 @@
         "email": "metalyx3@gmail.com",
         "url": "https://github.com/metalyx"
     },
+    "engines": {
+        "node": ">=18"
+    },
     "scripts": {
         "tsc": "node node_modules/typescript/bin/tsc",
         "dev:frontend": "vite",
