@@ -9,7 +9,7 @@
         "url": "https://github.com/metalyx"
     },
     "engines": {
-        "node": ">=18"
+        "node": "22.x"
     },
     "scripts": {
         "tsc": "node node_modules/typescript/bin/tsc",
