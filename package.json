@@ -9,7 +9,7 @@
         "url": "https://github.com/metalyx"
     },
     "scripts": {
-        "tsc": "./node_modules/typescript/bin/tsc",
+        "tsc": "node node_modules/typescript/bin/tsc",
         "dev:frontend": "vite",
         "build": "npm run tsc && vite build --emptyOutDir",
         "build:local": "tsc && vite build --emptyOutDir",
